@@ -68,6 +68,18 @@ def circularly_polarised_light(omega, t, handedness):
     else:
         print('You must specify right or left for handedness!')
 
+    return
+
+def elliptically_polarised(omega, t, theta):
+
+    Ay = np.cos(theta)
+    Az = np.sin(theta)
+    x = t
+    y = Ay*np.cos(2 * np.pi * omega * t)
+    z = Az*np.sin(2 * np.pi * omega * t)
+
+    return x, y, z
+
 def plot_animation(t, x, y, z, name):
 
     fig = plt.figure()
@@ -109,10 +121,13 @@ def plot_animation(t, x, y, z, name):
 
 frequency = 5
 phase_shift = 0
+theta = 30*np.pi/180.
 t = np.arange(0, 1, 0.01)
 
 #x, y, z = linearly_polarised_light(frequency, t, orientation='vertical')
 
-x, y, z = circularly_polarised_light(frequency, t, handedness='right')
+#x, y, z = circularly_polarised_light(frequency, t, handedness='right')
 
-plot_animation(t, x, y, z, name='Circularly')
+#x, y, z = elliptically_polarised(frequency, t, theta)
+
+plot_animation(t, x, y, z, name='Elliptically')
