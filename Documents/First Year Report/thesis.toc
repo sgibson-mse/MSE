@@ -1,0 +1,9 @@
+\contentsline {chapter}{\hbox to\@tempdima {\hfil }Abstract}{1}
+\contentsline {chapter}{\numberline {1}Introduction}{1}
+\contentsline {chapter}{\numberline {2}MSE Theory}{2}
+\contentsline {chapter}{\numberline {3}MSE System on MAST-U}{3}
+\contentsline {chapter}{\numberline {4}MSE in Context}{4}
+\contentsline {chapter}{\numberline {5}Summary}{5}
+\contentsline {chapter}{\hbox to\@tempdima {\hfil }Bibliography}{6}
+\contentsline {chapter}{\hbox to\@tempdima {\hfil }Appendix}{7}
+\contentsline {chapter}{\numberline {A}Appendix}{7}
