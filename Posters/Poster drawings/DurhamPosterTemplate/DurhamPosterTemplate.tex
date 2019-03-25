@@ -1,0 +1,263 @@
+%% Use this file as a template to create posters of a0 size. 
+%% 
+%% The template uses LaTeX constructs contributed by Andreas Jung in Sweden and
+%% graphics by Wally Ridgeway at Engineering Media Services, Auburn.
+
+%% It was adapted via the University of North Carolina Chapel Hill for use at Durham University.
+%% If you fix any problems with it, let me know!
+
+%% John Chapman, 22nd Jan, 2010.
+%% john.chapman@dur.ac.uk
+%% 
+
+\documentclass[a1,portrait]{a0poster}
+\usepackage{dcolumn,float}
+\usepackage{epsfig, amsmath}
+\usepackage{multicol,color,amssymb}
+\usepackage{pstricks,pst-grad,calrsfs}
+
+\newcommand{\Mega}{\fontsize{90}{1110}\selectfont}
+\newcommand{\diag}{\mathop{\rm diag}}
+\newcommand{\fnorm}[1]{\|#1\|_{{}_F}}
+\newcommand{\trace}{\mathop{\rm tr}}
+\newcommand{\expectation}[1]{\mathop{\rm E}\left\{#1 \right\}}
+
+
+%% Define a few colors used in the poster.
+\newrgbcolor{dupurple}{0.4 0.1255 0.4275}
+\definecolor{DRKV}{rgb}{0.5,0,0.5}
+\definecolor{DBLUE}{rgb}{0, 0.2, 0.5}
+\newrgbcolor{liter}{.95 .95 .95}
+
+
+%% Figures and tables
+%% The multicols package doesn't support the floats, figure and table.
+%% Use tablehere and figurehere in place of table and figure.
+
+\makeatletter
+\newenvironment{tablehere}
+  {\def\@captype{table}}
+  {}
+
+\newenvironment{figurehere}
+  {\def\@captype{figure}}
+  {}
+\makeatother
+
+%% These two eps figures are the same as the bullets (boulebleue-fondblanc.eps
+%% and boulerouge-fondblanc.eps) found in the prosper style PPRcorners.
+%% If you can generate orange and blue bullets of similar quality, please let us know
+%% on the Auburn TeX-users list.
+
+%\renewcommand{\labelitemi}{\includegraphics[width=6.5mm]{bluebullet.eps}}
+%\renewcommand{\labelitemii}{\includegraphics[width=6.5mm]{redbullet.eps}}
+
+%% The third level bullet is defined as the '-'.
+\renewcommand{\labelitemiii}{{-}}
+
+%% BibBTeX is not used to ensure consistency in the section headings. This command changes
+%% the way numbers are typset in the enumerate environment. Please change this or comment it
+%% out if you use the enumerate environment in your document.
+\renewcommand{\labelenumi}{[\theenumi]}
+
+
+%% From the multicol package. Defines spacing between columns of text, thickness of
+%% black line between columns and paragraph indentation
+\setlength{\columnsep}{2cm}
+\setlength{\columnseprule}{5mm}
+\setlength{\parindent}{0.0cm}
+
+%% The frame around the poster. You may change the all parameters
+%% Uses Timothy Van Zandt's pstricks package. You may change or add
+%% options to to suit your liking.
+
+
+%% Defines the poster enviroment
+
+\newenvironment{poster}{
+  \begin{center}
+  \begin{minipage}[c]{0.98\textwidth}
+}{
+  \end{minipage}
+  \end{center}
+}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%                pcolumn                       %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%\newenvironment{pcolumn}[1]{
+%  \begin{minipage}{#1\textwidth}
+%  \begin{center}
+%}{
+%  \end{center}
+%  \end{minipage}
+%}
+
+%% This command screates the shadowbox used for the title and section headings.
+
+\newcommand{\pbox}[4]{
+\psframebox[#3]{
+\begin{minipage}[t][#2][t]{#1}
+#4
+\end{minipage}
+}}
+
+% \mycaption replaces - replacement for \caption
+% necessary, since in the multicols environment \figure and
+% therefore \caption won't work
+
+\setcounter{figure}{1}
+\newcommand{\mycaption}[1]{
+  \vspace{0.5cm}
+  \begin{center}
+  \begin{quote}
+    {{\sc Figure} \arabic{figure}: #1}
+  \end{quote}
+  \end{center}
+ % \vspace{1cm}
+  \stepcounter{figure}
+}
+
+\begin{document}
+
+
+
+\begin{poster}
+%% The following construct typesets the title.
+
+\begin{center}
+\pbox{1.1\textwidth}{}{linewidth=0mm,framearc=0,linecolor=white,
+framesep=0}{
+%% The left-logo
+
+\vspace*{-2cm}
+\hspace*{-8.5cm}
+\begin{minipage}[c][9cm][c]{0.1\textwidth} 
+  \begin{center}
+    \includegraphics[width=650mm]{header_bar_logo.eps}
+  \end{center}
+\end{minipage}
+
+
+\vspace*{-9cm}
+\begin{minipage}[c][9cm][c]{0.78\textwidth}
+  \begin{flushleft}
+        { \huge   \color{white} {\textbf{Your Title Here}} }
+   \end{flushleft}
+   
+   \vspace*{1cm}
+   { \color{white} John Chapman$^\dagger$}
+   
+  
+ {\scriptsize
+ 
+ 
+\color{white} $^\dagger$  \texttt{john.chapman@durham.ac.uk},  Mathematical Sciences, Durham University.
+
+}
+\end{minipage}
+}
+\end{center}
+
+
+\vspace*{1.5cm}
+%% May change number of columns is poster here.
+\columnseprule=0.25mm
+\begin{multicols}{3}
+%%% The first section
+\sffamily
+
+
+\vspace{0.5cm}
+{\color{white}
+%\section*{Motivation}
+\begin{center}\pbox{0.8\columnwidth}{}{linewidth=2mm,framearc=0.1,linecolor=dupurple,fillstyle=solid,fillcolor=dupurple,
+framesep=1em}
+{\begin{center}\LARGE \textbf{Section1}   \end{center}}\end{center}
+\vspace{1.25cm}}
+
+Blah, blah, blah
+
+\begin{displaymath}
+ \int_0^1 f ~dx = F(x)
+\end{displaymath}
+
+
+\vspace{0.5cm}
+\begin{figurehere}
+\begin{center}
+  \includegraphics[scale=0.4]{DULogo_large.eps}
+  {\color{red} \mycaption{The Durham University Logo}}
+\end{center}
+\end{figurehere}
+
+Blah some more.
+
+
+%%% Second section
+\vspace{1cm}
+{\color{white}
+\begin{center}\pbox{0.8\columnwidth}{}{linewidth=2mm,framearc=0.1,
+linecolor=dupurple,fillstyle=solid,fillcolor=dupurple,framesep=1em}
+{\begin{center} \LARGE \textbf{Section 2} \end{center}}\end{center}}\vspace{1.25cm}
+
+
+
+
+%% Another Section
+\vspace{1cm}
+{\color{white}
+\begin{center}\pbox{0.8\columnwidth}{}{linewidth=2mm,
+framearc=0.1,linecolor=dupurple,fillstyle=solid,fillcolor=dupurple,framesep=1em}
+{\begin{center}\LARGE \textbf{Another Section} \end{center}}
+\end{center}}
+\vspace{1.25cm}
+
+
+\vspace{1cm}
+{\color{red}  \textbf{References}}:
+{
+\footnotesize
+\begin{enumerate}
+\item A.~Author, \textit{A Paper about stuff},
+J. Stuff Stu., 001, 429-439, 2003.
+
+\end{enumerate}
+}
+
+%\vspace{1.25cm}
+%\begin{figurehere}
+%\begin{center}
+ % \includegraphics[scale=1.5]{Mogilner4.eps}
+  %\mycaption{Cartoon}
+%\end{center}
+%\end{figurehere}
+%\vspace{0.75cm}*\
+
+
+
+\end{multicols}
+
+\columnseprule=0 mm
+\begin{multicols}{2}
+\vspace{0.75cm}
+\begin{center}
+\pbox{1.4\columnwidth}{}{linewidth=2mm,
+framearc=0.3,linecolor=dupurple,framesep=1em}
+{\begin{center} A Conference This Year: About Stuff, Hawaii (you wish).\end{center}}
+\end{center}
+
+\vspace{-1cm}
+\begin{figurehere}
+\begin{flushright}
+  \includegraphics[scale=1.0]{EPSRC.eps}
+\end{flushright}
+\end{figurehere}
+\end{multicols}
+
+
+
+\end{poster}
+
+\end{document}

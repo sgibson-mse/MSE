@@ -1,0 +1,74 @@
+\documentclass[11pt]{article}
+%Gummi|065|=)
+\title{\textbf{Meeting 2}}
+\date{}
+\begin{document}
+
+\section{Discussion Points}
+
+Feedback from each person on what they found last week.
+
+Breakdown of the project management specifics: Gant Chart, Work Breakdown Structure.
+
+\section{Sam: Detectors}
+
+Andy: Tail of high energy x-rays from bremmsstrahlung radiation from plasma current electrons. These could be used to calculate plasma current. 
+
+Stick with the soft x-ray detector (pin diode arrays) Sometimes use tomography to reconstruct 2D density distribution. 
+
+\section{Adam: Data Acquisition}
+
+Signal requires amplification - analogue signal propertional to photon energy. 
+ Instrumentation amplifier
+
+Boost up to voltage levels using an ADC - requires a specific resolution depending on noise and feature size. PCIE board on PC so we can connect back using ethernet connection to central computer to link up diodes from different chords.
+
+Without having a single PCI card per detector, would be a lot of computer stuff. Multiplexing could be possible?
+
+JT-60 central data system? No data currently available. 
+
+\section{Andy Neale: Optics}
+
+182 LoS in JT-60, reconstructing this gives a good poloidal cross section. Plasma shaping is a focus on JT-60 so we want as much info on this as possible, but this is more of an imaging system than spectroscopic. Need better time res. for imaging system, but energy resolution for spectroscopy. Array of cameras around the outside as an imaging system has an impact on optics. Imaging - pinhole cameras close to the plasma, whereas spectrometers can use lenses to move the diodes back away from the plasma. 
+
+Need to worry about shielding imaging systems. Filter/window to separate the aperture from the plasma. 
+
+\section{Tiantian: JT60}
+
+First wall: CFC wall with tungsten coating looks like the upgrade for JT-60. Do we want to know how many impurities we get or what they look like? Carbon gives carbon sputtering, could know how much carbon is put into the plasma. If we look at tungsten then we could find the different ionisation states of tungsten ions. We need to look into the effects of this. Low Z impurity and one High Z impurity (So we could look at carbon and tungsten?) High Z materials behave differently. 
+
+\section{Physics Case: Andy Smith} 
+
+Soft and ultrasoft X-ray is most information dense. Will move forward with soft x-rays. Do we want to do something spectroscopic looking at temperature and imurity densities and cooling effects, bulk plasma charactersistics. Or do we want something more spatially dependent to work out MHD instabilities etc? 
+
+Pinhole camera + Array  - time resolution is more critical largely set by the semiconductor we pick. 
+
+\section{Jobs for Next Week}
+
+Layout of the Document:
+
+\section{Introduction} 
+
+Introduction to JT-60: aims of the upgrade (Tiantian)
+
+Andy - Physics of soft X-ray spectra, why it's useful to look at this
+
+Requirements of the diagnostic we propose and it's scope/business case - Sam
+
+\section{Technical}
+
+Diagnostic Information - Physics case
+Soft X-ray Diagnostics: What is it, why is it useful, what do they want from it data wise
+
+Each write up the speciality we were looking at last week.
+
+\section{Work Breakdown Structure}
+\section{Scheduling}
+\section{Estimating Costs}
+\section{Quality Assurance}
+\section{Risk Management}
+
+
+
+
+\end{document}

@@ -1,0 +1,363 @@
+\documentclass[portrait,a1]{a0poster}
+
+%% \usepackage{geometry}\geometry{
+%%   paperwidth = 36in,
+%%   paperheight = 35in,
+%%   left = 2in,
+%%   right = 2in,
+%%   top = 1in,
+%%   bottom = 1in,
+%%   nohead}
+
+\usepackage{multicol}
+\setlength{\columnsep}{1in}
+\setlength{\columnseprule}{0.5mm}
+
+\usepackage{acronym}
+\usepackage[all]{xy}
+\usepackage{psfrag}
+%\usepackage{quieter}
+
+\setlength{\parindent}{0cm}
+\setlength{\parskip}{1.0ex plus 0.25ex minus 0.1ex}
+
+%% to set up dvips viewer
+% xdvi -hush -s 12 -paper a1 RAPID1.dvi &
+
+%% to go through ps2pdf (seems to be producing two pages)
+% dvips -Ppdf -G0 -pp1 -o RAPID1.ps RAPID1.dvi
+% ps2pdf -dPDFsettings=/prepress RAPID1.ps
+% xpdf RAPID1.pdf &
+
+%% to make a4 version
+% dvips -pp1 -o RAPID1.ps RAPID1.dvi
+% psresize -W59.5cm -H84.1cm -pa4 RAPID1.ps RAPID1a4.ps
+
+%% DAW: to make a2 version
+% dvips -pp1 -o RAPID1.ps RAPID1.dvi
+% psresize -W59.5cm -H84.1cm -w21.0cm -h29.7cm RAPID1.ps RAPID1a2.ps
+
+\usepackage[tbtags]{amsmath}
+\usepackage{amsfonts,amssymb}
+\usepackage{helvet}\renewcommand{\familydefault}{\sfdefault}
+\usepackage{graphicx}
+\usepackage{psfrag}
+
+\usepackage{colordvi}
+\renewcommand{\emph}[1]{\textit{\OliveGreen{#1}}}
+
+\usepackage{natbib}
+\bibliographystyle{elsart-harv}
+
+%\newcommand{\myhref}[2]{#1~\ref{#2}}
+%\newcommand{\curly}[1]{\left\{ #1 \right\}}
+\newcommand{\degC}{\text{${}^{\circ}$C}}
+\newcommand{\X}{\mbox{$\cal X$}}
+\newcommand{\boost}{\vphantom{\big(\big)}}
+\newcommand{\defined}{\triangleq}
+\newcommand{\MM}[3]{\textrm{#1}_{#2}( \boost #3 )}
+\renewcommand{\Pr}[1]{\MM{Pr}{}{#1}}
+\newcommand{\E}[1]{\MM{E}{}{#1}}
+\newcommand{\Var}[1]{\MM{Var}{}{#1}}
+\newcommand{\given}{\mathrel{\vert}\nolinebreak}
+\newcommand{\bs}[1]{\boldsymbol{#1}}
+
+%\newcommand{\XA}{\mbox{${\cal X}_{\!A}$}}
+%\newcommand{\XB}{\mbox{${\cal X}_{\!B}$}}
+%\newcommand{\I}{\mbox{$\cal I$}}
+%\newcommand{\R}{\mathbb{R}}
+\newcommand{\xhat}{\mbox{$\vphantom{x}\smash{\hat{x}}$}}
+\newcommand{\ztilde}{\mbox{$\vphantom{z}\smash{\tilde{z}}$}}
+\newcommand{\myEq}{\text{\small${}={}$}}
+
+\newcommand{\mySection}[1]{\subsection*{\OliveGreen{#1}}}
+\newcommand{\myQuote}[1]{\Mahogany{#1}}
+
+\hyphenation{im-plaus-ibility im-plaus-ible}
+
+\begin{document}
+
+%% title
+
+\parbox[b]{0pt}{\makebox[0pt][l]{\smash{\includegraphics{DU_2-col_sml}}}}%  
+\parbox[b]{0.99\textwidth}{%
+  \centering%
+  \textbf{\OliveGreen{\Large Inference with Imperfect Climate Models}}\par%
+  \bigskip%
+  \textbf{\OliveGreen{\large Jonathan Rougier, Durham University}}%
+}%
+\parbox[b]{0pt}{\makebox[0pt][r]{\smash{\includegraphics{nercLogo1}}}}%
+
+\bigskip\bigskip
+
+
+\begin{multicols}{2}
+  
+
+\mySection{Outline and background}
+
+\begin{quote}
+  \myQuote{What is the probability that global mean temperature is
+    $3\degC$ higher in 2100?}
+\end{quote}
+
+In order to answer this question we must be aware that:
+\begin{itemize}
+\item Probabilities are required, and these are inherently subjective;
+  and
+\item The subject of the question is the climate itself, not this or
+  that climate simulator.
+\end{itemize}
+We need to specify a probabilistic framework linking our climate
+simulator, the climate itself, and climate data.  This must account
+for the fact that the simulators we have today are diverse and will
+age rapidly, ie it must be sufficiently general to handle simulators
+with different properties but representing the same
+underlying climate system.%%   Here I illustrate one such framework,
+%% ``Reified modelling'', using a \ac{BBN}, which is a graphical
+%% representation of a joint probability distribution.  We aim to apply
+%% this framework with the \textsc{c-goldstein} climate simulator over
+%% the coming year.
+
+\textbf{Notation:}%%   The following notation is fairly common in the
+%% field of \emph{computer experiments}:
+\begin{tabbing}
+  \hspace*{0.2in} \= \hspace*{1.5in} \= \kill
+  \+ \kill
+  $x \in \X$ \> The climate model parameters \\
+  $g(\cdot)$ \> The climate simulator (model + treatment + solver) \\
+  $y$ \> Actual climate corresponding to the simulator outputs \\
+  $z, e$ \> Observations on climate, measurement error \\
+  $\epsilon$ \> Climate simulator discrepancy \\
+%  $F_{q}(\cdot)$ \> The \acl{DF} of the uncertain quantity $q$
+\end{tabbing}
+
+\textbf{Interpreting a Bayesian Belief Network.}  A \ac{BBN} is a way
+of representing a joint probability distribution, highlighting the
+structural issues that follow from assertions of prior independence.
+Whenever we construct probabilistic frameworks we seek to exploit
+independence where it might reasonably exist, because this simplifies
+the specification of the joint distribution.
+
+\begin{enumerate}
+\item $\xymatrix{a \ar[r] & b}$ reads ``$a$ is a parent of $b$''
+
+\item A vertex in a box is completely determined by its parents, and
+  is included just for clarity: these should be ignored in (3)-(5)
+
+\item A missing edge between two vertices indicates an assertion
+  about prior independence; e.g.\ $\xhat$ and $e$ are \textit{a
+    priori} independent in~\eqref{eq:DAGPerfect}
+
+\item A vertex with no parents requires a marginal \ac{DF} to be
+  specified, e.g.\ $F_{\xhat}(v) \defined \Pr{\xhat \leq v}$
+  in~\eqref{eq:DAGPerfect}; or else it must be treated as known, e.g.\ 
+  $g(\cdot)$ in~\eqref{eq:DAGPerfect}
+
+\item A vertex with parents requires a conditional \ac{DF} to be
+  specified, e.g.\ $g(\cdot)$ in~\eqref{eq:DAGMess}
+
+\end{enumerate}
+
+
+
+\mySection{The simplest case: a perfect simulator}
+
+Suppose we believe our simulator to be perfect, i.e. there exists a
+`correct' value for the simulator inputs, $\xhat \in \X$, such that
+$g(\xhat) = y$.  The \ac{BBN} representation is
+\begin{equation}
+  \label{eq:DAGPerfect}
+  \begin{array}{c}
+    \DarkOrchid{
+      \xymatrix@C+50pt{
+      & \xhat \ar[d]    &          e \ar[d] \\
+      g(\cdot) \ar[r] & *+[F]{g(\xhat) \equiv y\boost} \ar[r] & *+[F]{z\boost} \\ 
+    }} \tag{\dag}
+  \end{array}
+\end{equation}
+Taking our simulator as given (for simplicity only), we must specify a
+\ac{DF} for the correct input $\xhat$ and a \ac{DF} for the
+measurement error $e$: we assert that these two uncertain quantities
+are \textit{a priori} independent.  The probability calculus then
+determines exactly how our beliefs about $\xhat$ and $y$ are updated
+on observing a particular value for the climate data $z$; the vertices
+$g(\cdot)$ and $z$ are said to be \emph{instantiated}.
+
+%%   This update
+%% is a completely unambigous operation, although doing the calculations
+%% effectively can require some fine judgement.  The joint updated
+%% distribution is denoted $(\xhat, y) \given z \myEq \ztilde$; the
+%% marginal distribution $\xhat \given z \myEq \ztilde$ is termed the
+%% \emph{calibration distribution}, while $y \given z \myEq \ztilde$ is
+%% the \emph{posterior predictive distribution}.  In this probabilistic
+%% approach the operations of calibration and prediction are unified, and
+%% thus completely consistent.
+
+
+%% \begin{minipage}{0.45\columnwidth}
+%%   \textbf{What can go wrong?} If our simulator is imperfect and we
+%%   treat it as perfect, or, more generally, if we treat our simulator
+%%   as better than it actually is, then the climate data $z$ will
+%%   over-constrain the value for $\xhat$, so that, for example, if $z
+%%   \equiv (z_1, z_2)$, then $\xhat \given z_1$ and $\xhat \given z_2$
+%%   are contradictory.
+%% \end{minipage}
+%% \hfill
+%% \begin{minipage}{0.45\columnwidth}
+%%   \psfrag{0}{$0$}
+%%   \psfrag{xhat1}{$\xhat_1$}
+%%   \psfrag{xhat2}{$\xhat_2$}
+%%   \psfrag{z1}{$z_1$}
+%%   \psfrag{z2}{$z_2$}
+%%   \includegraphics{constraint1}
+%% \end{minipage}
+
+\textbf{Where does this go wrong?} If our simulator is imperfect and
+we treat it as perfect, or, more generally, if we treat our simulator
+as better than it actually is, then the climate data $z$ will
+over-constrain the value for $\xhat$, so that, for example, if $z
+\equiv (z_1, z_2)$, then $\xhat \given z_1$ and $\xhat \given z_2$ may
+be contradictory.  The notion that the `correct' model parameters
+$\xhat$ have some intrinsic meaning can be expressed informally as
+\myQuote{more system data tends to \textit{concentrate} our beliefs
+  about $\xhat$}, or
+\begin{displaymath}
+  \xhat \given (z_1, z_2) \subset \xhat \given z_1
+  \quad \textit{and} \quad 
+  \xhat \given (z_1, z_2) \subset \xhat \given z_2 \,.
+\end{displaymath}
+If we abandon this notion, we might as well be fitting statistical
+models to the system data and using standard prediction techniques
+based on smoothness.
+%%   If climate scientists want to stop statisticians
+%% taking over, they are going to have to think carefully about the
+%% imperfections in their simulators.
+
+
+\mySection{The `best input' approach}
+
+When we step away from the `perfect simulator' we must acknowledge
+that there may be no input in $\X$ for which the simulator output
+matches the system.  How then do we define the `best' input $\xhat$?
+One way is by retaining the notion that if we knew $\xhat$ then only a
+single evaluation of the simulator would be necessary (as would be the
+case were $\xhat$ to be the correct input).  In this case the
+difference between $f(\xhat)$ and $y$ has to be an uncertain quantity
+that is \textit{a priori} independent of $g(\cdot)$ and $\xhat$.  We
+call this difference the \emph{simulator discrepancy}, and it enters
+the \ac{BBN} as
+\begin{equation}
+  \label{eq:DAGBest}
+  \begin{array}{c}
+    \DarkOrchid{
+    \xymatrix@C+50pt{
+                      & \xhat \ar[d]                  & \epsilon \ar[d]       & e \ar[d] \\
+      g(\cdot) \ar[r] & *+[F]{g(\xhat)\boost} \ar[r] & *+[F]{y\boost} \ar[r] & *+[F]{z\boost} \\ 
+    }} \tag{\ddag}
+  \end{array}
+\end{equation}
+Setting $\E{\epsilon} = \bs{0}$ and $\Var{\epsilon} = \bs{0}$ takes us
+back to the `perfect simulator'.  Specifying the \ac{DF} for
+$\epsilon$ may be hard, but setting $\epsilon$ to zero is just plain
+wrong.  \myQuote{But who thought that inference about climate using
+  imperfect climate simulators was going to be easy?}
+
+\textbf{Where does this go wrong?}  At the next stage, when we have
+two simulators for the same (or related) climate quantities.  Applying
+\eqref{eq:DAGBest} to each simulator creates a real mess where we end
+up with a lot of edges across the two simulators:
+\begin{equation}
+  \label{eq:DAGMess}
+  \begin{array}{c}
+    \DarkOrchid{
+      \xymatrix@C+50pt{
+                      & \xhat \ar[d] \ar@/_70pt/[dddd]  & \epsilon \ar[dd] \ar@/^40pt/[dddd]      & & \\
+      g(\cdot) \ar[r] & *+[F]{\vphantom{g'(\xhat')\boost}\smash{g(\xhat)}} \ar[rd] \ar[rddd] & & & \\ 
+      & & *+[F]{y\boost} \ar[r] & *+[F]{z\boost} & e \ar[l] \\ 
+      g'(\cdot) \ar[r] \ar[uu] & *+[F]{g'(\xhat')\boost} \ar[rd] & & \\
+      & \xhat' \ar[u]            & *+[F]{\epsilon'\boost}    &    & \\
+    }} \tag{\dag\!\dag}
+  \end{array}
+\end{equation}
+(note how $\epsilon'$ gets fixed because both simulators are
+informative about the same thing).  The additional edges capture the
+fact that simulators $g(\cdot)$ and $g'(\cdot)$ are not-unlike each
+other so that we could, for example, learn about $g(\cdot)$ from
+evaluations of $g'(\cdot)$.  While we do not have a problem with
+linking $g(\cdot)$ and $g'(\cdot)$ in this way, having two related
+best inputs and two related discrepancies opens up a whole can of
+worms.  \myQuote{Specifying \eqref{eq:DAGMess} is basically out of the
+  question.}
+
+
+\mySection{`Reified' analysis}
+
+Happily there is another way to link these elements together in a
+\ac{BBN}:
+\begin{equation}
+  \label{eq:DAGReify}
+  \begin{array}{c}
+    \DarkOrchid{
+    \xymatrix@C+50pt{
+                    &  & \xhat^* \ar[dd]              & \epsilon^* \ar[dd] & e \ar[dd] \\
+      g(\cdot) \ar[dr] & & & & \\
+      & g^*(\cdot) \ar[r] & *+[F]{g^*(\xhat^*)\boost} \ar[r] & *+[F]{y\boost} \ar[r] & *+[F]{z\boost} \\
+      g'(\cdot) \ar[uu] \ar[ur]|{\textrm{\tiny optional}} & & & & \\
+    }} \tag{\ddag\!\ddag}
+  \end{array}
+\end{equation}
+The trick here is to introduce an imaginary simulator $g^*(\cdot)$,
+known as the \emph{reified simulator}, which is the best simulator we
+can imagine with current technology.  Only this simulator gets joined
+up to the system, so we are back with one best input and one
+discrepancy, and the good news is that \myQuote{we expect $\xhat^*$ to
+  be very close to its correct physical value and $\Var{\epsilon^*}$
+  to be small}.  Think of $g^*(\xhat^*)$ as a point between $g(\xhat)$
+and $y$.  Previously we had to span the whole of this distance with
+$\epsilon$, but now we can span it in two steps, and this may actually
+be easier to think about.
+
+
+
+
+
+
+
+
+
+
+
+
+\nocite{gr05a}
+\nocite{gr05b}
+\nocite{rougier05a}
+\nocite{cdls99}
+
+\renewcommand{\bibsection}{}
+\sloppy\small
+\bibliography{ComputerExperiment,climate,statistics}
+  
+\end{multicols}
+
+\begin{acronym}
+\item {}
+  \acrodef{BBN}{Bayesian Belief Network}
+  \acrodef{DF}{Distribution Function}
+\end{acronym}
+
+
+
+
+\end{document}
+
+%%%% process NERC logo (in /tmp)
+
+tiff2ps -e -w5 -h5 '(COL)NER.TIF' > nercLogo.eps
+xv nercLogo.eps
+
+%% then crop and save as nercLogo1.eps
+
+%%%% make a4 version: this should work but doesn't
+
+dvips -x 353 -y 353 -pp 1 -t a4 -o RAPID1a4.ps RAPID1.dvi
